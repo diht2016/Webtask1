@@ -11,9 +11,8 @@ func main() {
     http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
         path := r.URL.Path[1:]
         if path == "" && r.Method == "POST" {
-            r.ParseForm()
             num += 1
-            dict[strconv.Itoa(num)] = r.Form.Get("url")
+            dict[strconv.Itoa(num)] = r.FormValue("url")
             
             w.Header().Set("Content-Type", "application/json")
             fmt.Fprintf(w, "{\"key\": \"%d\"}", num)
