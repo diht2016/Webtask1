@@ -4,6 +4,7 @@ import "fmt"
 import "net/http"
 import "strconv"
 import "strings"
+import "io/ioutil"
 
 func main() {
     dict := make(map[string]string)
@@ -13,7 +14,10 @@ func main() {
         path := r.URL.Path[1:]
         if path == "" && r.Method == "POST" {
             num += 1
-            dict[strconv.Itoa(num)] = strings.Split(r.FormValue("body"), "\"")[3]
+			defer r.Body.Close()
+			bodyBytes, err2 := ioutil.ReadAll(resp.Body)
+			bodyString := string(bodyBytes)
+            dict[strconv.Itoa(num)] = strings.Split(bodyString, "\"")[3]
             
             w.Header().Set("Content-Type", "application/json")
             fmt.Fprintf(w, "{\"key\": \"%d\"}", num)
