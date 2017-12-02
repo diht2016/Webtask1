@@ -15,7 +15,7 @@ func main() {
         if path == "" && r.Method == "POST" {
             num += 1
 			defer r.Body.Close()
-			bodyBytes, err2 := ioutil.ReadAll(resp.Body)
+			bodyBytes, _ := ioutil.ReadAll(r.Body)
 			bodyString := string(bodyBytes)
             dict[strconv.Itoa(num)] = strings.Split(bodyString, "\"")[3]
             
