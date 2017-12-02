@@ -2,6 +2,7 @@ package main
 
 import "fmt"
 import "net/http"
+import "strconv"
 
 func main() {
     dict := make(map[string]string)
@@ -12,7 +13,7 @@ func main() {
         if path == "" && r.Method == "POST" {
             r.ParseForm()
             num += 1
-            dict[string(num)] = r.Form.Get("url")
+            dict[strconv.Itoa(num)] = r.Form.Get("url")
             
             w.Header().Set("Content-Type", "application/json")
             fmt.Fprintf(w, "{\"key\": \"%d\"}", num)
