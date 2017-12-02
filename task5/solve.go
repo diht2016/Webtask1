@@ -15,7 +15,7 @@ func main() {
             dict[string(num)] = r.Form.Get("url")
             
             w.Header().Set("Content-Type", "application/json")
-            fmt.Fprintf(w, "{key:%d}", num)
+            fmt.Fprintf(w, "{\"key\": \"%d\"}", num)
         } else if path != "" {
 			url, ok := dict[path]
 			if ok {
